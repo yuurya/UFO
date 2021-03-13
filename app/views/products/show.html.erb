@@ -3,6 +3,8 @@
 <%= @product.title %>
 <%= @product.product_name %>
 <%= @product.body %>
-<%= @product.created_at %>
+<%= @product.created_at.strftime('%Y/%m/%d %H:%M:%S') %>
 
+<%= link_to "一覧へ戻る", products_path %>
 <%= link_to "編集", edit_product_path(@product) %>
+<%= link_to "削除", product_path(@product), method: :delete, data: {confirm: "ほんとに消す？"} %> 
