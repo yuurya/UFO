@@ -1,1 +1,0 @@
-params.require(:user).permit(:image)

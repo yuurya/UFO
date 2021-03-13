@@ -6,6 +6,7 @@
 <table>
     <thead>
     <tr>
+    <th>ユーザー</th>
     <th>タイトル</th>
     <th>商品名</th>
     <th>本文</th>
@@ -16,6 +17,7 @@
     <tbody>
         <% @products.each do |product| %>
             <tr>
+            　　<td><%= product.user.name %></td>
                 <td><%= product.title %></td>
                 <td><%= product.product_name %></td>
                 <td><%= product.body %></td>
@@ -28,25 +30,19 @@
     </tbody>
 </table>
 
-
-<h4>新規投稿</h4>
-あなたがオススメしたいUFOを投稿しよう！
-<%= form_for(@product) do |f| %>
-
-  <h4>タイトル</h4>
-  <%= f.text_field :title %>
-
-  <h4>商品名</h4>
-  <%= f.text_field :product_name %>
-
-  <h4>本文</h4>
-  <%= f.text_area :body %>
-
-  <h4>画像アップロード</h4>
-  
-
-  <%= f.submit '投稿' %>
-
+<% if user_signed_in? %>
+    <h4>新規投稿</h4>
+    あなたがオススメしたいUFOを投稿しよう！
+    <%= form_for(@product) do |f| %>
+        <h4>タイトル</h4>
+        <%= f.text_field :title %>
+        <h4>商品名</h4>
+        <%= f.text_field :product_name %>
+        <h4>本文</h4>
+        <%= f.text_area :body %>
+        <h4>画像アップロード</h4>
+        <%= f.submit '投稿' %>
+    <% end %>
 <% end %>
 
 </body>
