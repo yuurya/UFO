@@ -3,12 +3,14 @@ class ProductsController < ApplicationController
     
     @products = Product.all
     @product = Product.new
+    
   end
 
   def show
     flash[:notice] = "ログイン済ユーザーのみ記事の詳細を確認できます" unless user_signed_in?
     if user_signed_in? 
       @product = Product.find(params[:id])
+      @post_comment = PostComment.new
     end
     
   end
@@ -60,6 +62,7 @@ class ProductsController < ApplicationController
   private
   def product_params
     params.require(:product).permit(:title, :product_name, :body)
+
   end
   
 end

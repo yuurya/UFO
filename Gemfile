@@ -61,3 +61,6 @@ gem "refile-mini_magick"
 
 gem 'carrierwave'
 gem 'rmagick'
+
+gem 'bootstrap', '~> 4.5'
+gem 'jquery-rails'

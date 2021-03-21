@@ -1,17 +1,21 @@
+<div class="font">
 <h1>UFO紹介ページ</h1>
+</div>
 
 <body>
 <p id="notice"></p>
 
-<table>
+<table class="table table-striped">
     <thead>
     <tr>
     <th>ユーザー</th>
     <th>タイトル</th>
     <th>商品名</th>
     <th>本文</th>
+
     <th colspan="3"></th>
     </tr>
+    
     </thead>
 
     <tbody>
@@ -21,28 +25,53 @@
                 <td><%= product.title %></td>
                 <td><%= product.product_name %></td>
                 <td><%= product.body %></td>
+                <td><%= link_to "#{product.post_comments.count} コメント", product_path(product.id) %></td>
                 
                 <td><%= link_to "詳細ページ", product_path(product) %></td>
                 <td><%= link_to "編集", edit_product_path(product) %></td>
                 <% if user_signed_in? %>
                 <td><%= link_to "削除", product_path(product), method: :delete, data: {confirm: "ほんとに消す？"} %></td>
                 <% end %>
+
+
+                <td><% if product.favorited_by?(current_user) %>
+                    <p>
+                    <%= link_to product_favorites_delete_for_index_path(product.id), method: :delete do %>
+                        ♥<%= product.favorites.count %> いいね
+                    <% end %>
+                    </p>
+                <% else %>
+                    <p>
+                    <%= link_to product_favorites_create_for_index_path(product.id), method: :post do %>
+                        ♡<%= product.favorites.count %> いいね
+                    <% end %>
+                    </p>
+                <% end %>
+                </td>
+
+                
+
+
             </tr>
-        <% end %>     
+                    
+        <% end %>
+  
+   
     </tbody>
+ 
 </table>
 
 <% if user_signed_in? %>
     <h4>新規投稿</h4>
     あなたがオススメしたいUFOを投稿しよう！
     <%= form_for(@product) do |f| %>
-        <h4>タイトル</h4>
+        <h7>タイトル</h7>
         <%= f.text_field :title %>
-        <h4>商品名</h4>
+        <h7>商品名</h7>
         <%= f.text_field :product_name %>
-        <h4>本文</h4>
+        <h7>本文</h7>
         <%= f.text_area :body %>
-        <h4>画像アップロード</h4>
+        <h7>画像アップロード</h7>
         <%= f.submit '投稿' %>
     <% end %>
 <% end %>
