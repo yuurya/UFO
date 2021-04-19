@@ -12,8 +12,13 @@
   <%= f.text_area :body %>
 
   <h4>画像アップロード</h4>
+  <%= form_with model: @product.product_images.new, local:true do |f| %>
+  <%= f.attachment_field :image %>
+  <% end %>
 
 
   <%= f.submit '投稿' %>
+  
 
 <% end %>
+

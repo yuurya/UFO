@@ -3,6 +3,10 @@ class ProductsController < ApplicationController
     
     @products = Product.all
     @product = Product.new
+
+    @product.product_images.build # added
+    @product.product_images.build # added
+  
     
   end
 
@@ -26,8 +30,9 @@ class ProductsController < ApplicationController
     flash[:notice] = "ログイン済ユーザーのみ記事の詳細を確認できます" unless user_signed_in?
     if user_signed_in?
     user_id = current_user.id
+    
     product = Product.new(product_params.merge({user_id: user_id}))
-    product.save
+    product.save!
     redirect_to products_path(product.id)
     end
   end
@@ -61,8 +66,19 @@ class ProductsController < ApplicationController
 
   private
   def product_params
-    params.require(:product).permit(:title, :product_name, :body)
-
+    t = params.require(:product).permit(:title, :product_name, :body, product_images_attributes:[:image])
+    t[:product_images_attributes] = t[:product_images_attributes].to_h.values
+    t
+    # huga = []
+    # tmp[:product_images_attributes].each do |k,v|
+    #   huga.push({image: v[:image], user_id: current_user.id})
+    # end
+    # tmp[:product_images_attributes] = huga
+    # byebug
+    
   end
   
 end
+
+# tmp = {product_images_attributes:1, b:2}
+# tmp[:product_images_attributes]

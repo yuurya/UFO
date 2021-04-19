@@ -25,7 +25,13 @@
                 <td><%= product.title %></td>
                 <td><%= product.product_name %></td>
                 <td><%= product.body %></td>
-                <td><%= link_to "#{product.post_comments.count} コメント", product_path(product.id) %></td>
+                <td>
+                    <% product.product_images.each do |image| %>
+                        <%= attachment_image_tag image, :image, :fill, 100, 100, format: 'jpeg'  %>
+                    <% end %>
+                </td>
+                
+                    <td><%= link_to "#{product.post_comments.count} コメント", product_path(product.id) %></td>
                 
                 <td><%= link_to "詳細ページ", product_path(product) %></td>
                 <td><%= link_to "編集", edit_product_path(product) %></td>
@@ -72,6 +78,10 @@
         <h7>本文</h7>
         <%= f.text_area :body %>
         <h7>画像アップロード</h7>
+        <%= f.fields_for :product_images do |image| %>
+          <%= image.attachment_field :image %>
+        <% end %>
+          
         <%= f.submit '投稿' %>
     <% end %>
 <% end %>
